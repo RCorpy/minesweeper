@@ -7,6 +7,8 @@ import {Provider} from 'react-redux'
 
 
 function App() {
+
+
   return (
     <div style={{display:"flex", justifyContent:"center"}}>
       <Provider store={store}>

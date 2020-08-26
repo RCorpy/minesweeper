@@ -1,33 +1,35 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 
-function Cell({type, number, position}) {
-
-    const [clicked, setClicked] = useState("unclicked")
+function Cell(props) {
 
     const handleClick = (e) => {
         if (e.type === 'click') {
-            if(type==="bomb"){
+            if(props.type==="bomb"){
                 console.log("BOOOOOM")
             }
-            else{setClicked("clicked")}
+            else{
+                props.setCell("clicked", [props.row, props.column])}
             
 
         }
         else if (e.type === 'contextmenu'){
             e.preventDefault()
-            if(clicked==="marked"){setClicked("unclicked")}
-            else{setClicked("marked")}
+            if(props.status==="marked"){props.setCell("unclicked" , [props.row, props.column])}
+            else{
+                props.setCell("marked" , [props.row, props.column])
+
+            }
         }
     }
 
     return (
         <>
         {
-        (clicked==="clicked" || clicked ==="marked") ? 
-            (clicked==="marked") ?
-            (<button>x</button>) :
-            (<button>{position[0]}</button>) : 
+        (props.status==="clicked" || props.status ==="marked") ? 
+            (props.status==="marked") ?
+            (<button onContextMenu={(e)=>{handleClick(e)}}>x</button>) :
+            (<button>{props.number}</button>) : 
             (<button onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}>o</button>)
         }
         </>
@@ -37,9 +39,10 @@ function Cell({type, number, position}) {
 
 
 const connectedCell = connect(state => ({state:state}), (dispatch)=>({
-    setMarked: (columnName) => dispatch({
-        type: 'DELETE_COLUMN',
-        columnName: columnName
+    setCell: (newStatus, position) => dispatch({
+        type: 'SET_CELL',
+        newStatus: newStatus,
+        position: position
     })
   }))(Cell)
   export default connectedCell;
