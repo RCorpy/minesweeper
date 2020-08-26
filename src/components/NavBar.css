@@ -1,0 +1,15 @@
+.navbar{
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid black;
+}
+
+.menubutton{
+    
+    justify-self: left;
+}
+
+.resetbutton{
+    
+    margin-left: auto;
+}
