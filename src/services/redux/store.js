@@ -18,7 +18,7 @@ const createGrid = (rows, columns) => {
         
     }
     const bombedGrid = placeBombs(grid, 10)
-    const bombedAndNumeredGrid = numberGrid(grid)
+    const bombedAndNumeredGrid = numberGrid(bombedGrid)
     return bombedAndNumeredGrid
 }
 
@@ -59,7 +59,7 @@ const numberGrid = (grid) => {
             for (let j = -1; j<=1; j++){
                 let posX= x+i
                 let posY= y+j
-                if(posX>=0 && posY>=0 &&posX<rows && posY<columns && !(posX==posY && posX==0) && grid[posX][posY].type==="bomb"){
+                if(posX>=0 && posY>=0 && posX<rows && posY<columns && !(i===0 && j===0) && grid[posX][posY].type==="bomb"){
                     count++
                 }
             }
@@ -69,6 +69,7 @@ const numberGrid = (grid) => {
     console.log(grid)
     for(let i=0; i<rows; i++){
         for(let j=0; j<columns; j++){
+            console.log(i,j)
             grid[i][j]= {...grid[i][j], number: isBomb(i,j)}
         }
     }
@@ -101,6 +102,7 @@ function reducer(state = initialState, action){
         case 'SET_CELL':
             let prevGrid = state.grid
             prevGrid[action.position[0]][action.position[1]] = { ...prevGrid[action.position[0]][action.position[1]] , status: action.newStatus}
+            if(prevGrid[action.position[0]][action.position[1]].number===0 && action.newStatus==="clicked"){manageZero(prevGrid,action.position[0],action.position[1])}
             return {
                 ...state,
                 grid: prevGrid
@@ -108,6 +110,19 @@ function reducer(state = initialState, action){
         default:
             return state
     }
+}
+
+const manageZero = (grid, row, column) => {
+    
+    for (let i=-1;i<=1;i++){
+        for(let j=-1;j<=1;j++){
+            if(grid[row+i] && grid[row+i][column+j] && grid[row+i][column+j].status==="unclicked"){
+                grid[row+i][column+j] = {...grid[row+i][column+j], status: "clicked"}
+                if (grid[row+i][column+j].number===0){manageZero(grid, row+i, column+j)}
+            }
+        }
+    }
+    return grid
 }
 
 const store = createStore(reducer)
