@@ -12,10 +12,43 @@ const createGrid = (rows, columns) => {
     for(let j=0; j<rows; j++){
         let rowArray = []
         for (let i=0; i<columns; i++){
-            rowArray.push({type: "bmb", number: 9, status: "unclicked"})
+            rowArray.push({type: "", number: 9, status: "unclicked"})
         }
         grid.push(rowArray)
     }
+    const bombedGrid = placeBombs(grid, 10)
+    const bombedAndNumeredGrid = numberGrid(grid)
+    return bombedAndNumeredGrid
+}
+
+const placeBombs = (grid, amountBombs) => {
+    const rows = grid.length
+    const columns = grid[0].length
+    const randomRow = () => {
+        return Math.floor(Math.random()*rows)
+    }
+    const randomColumn = () => {
+        return Math.floor(Math.random()*columns)
+    }
+    const bombLoop = (bombGrid, bombsRemaining) => {
+        if ( bombsRemaining < 1 ){
+            return bombGrid
+        }
+        else {
+            let r = randomRow()
+            let c = randomColumn()
+            if (bombGrid[r][c].type === "bomb") { return bombLoop(bombGrid, bombsRemaining)}
+            else {
+            bombGrid[r][c] = {...bombGrid[r,c], type: "bomb"}
+            return bombLoop(bombGrid, bombsRemaining-1)
+        }
+        }
+    }
+    return bombLoop(grid, amountBombs)
+}
+
+const numberGrid = (grid) => {
+    //HERE
     return grid
 }
 
