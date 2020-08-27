@@ -66,10 +66,8 @@ const numberGrid = (grid) => {
         }
         return count
     }
-    console.log(grid)
     for(let i=0; i<rows; i++){
         for(let j=0; j<columns; j++){
-            console.log(i,j)
             grid[i][j]= {...grid[i][j], number: isBomb(i,j)}
         }
     }
@@ -122,7 +120,6 @@ const manageZero = (grid, row, column) => {
             }
         }
     }
-    return grid
 }
 
 const store = createStore(reducer)

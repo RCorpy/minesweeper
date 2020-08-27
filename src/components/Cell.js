@@ -7,6 +7,7 @@ function Cell(props) {
         if (e.type === 'click') {
             if(props.type==="bomb"){
                 console.log("BOOOOOM")
+                props.setCell("clicked", [props.row, props.column])
             }
             else{
                 props.setCell("clicked", [props.row, props.column])}
@@ -23,18 +24,17 @@ function Cell(props) {
         }
     }
 
-    return (
-        <>
-        {
-        (props.status==="clicked" || props.status ==="marked") ? 
-            (props.status==="marked") ?
-            (<button onContextMenu={(e)=>{handleClick(e)}}>x</button>) :
-            (<button>{props.number}</button>) : 
-            (<button onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}>o</button>)
-        }
-        </>
-    )
 
+    if(props.status ==="clicked"){
+        return (
+        <>
+            {props.type==="bomb" ? <button> 💣</button>: <button>{props.number}</button>}
+        </>)
+    }
+    else if(props.status ==="marked"){
+        return (<button onContextMenu={(e)=>{handleClick(e)}}>x</button>)
+    }
+    else { return (<button onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}>o</button>)}
 }
 
 
