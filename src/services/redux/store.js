@@ -48,7 +48,28 @@ const placeBombs = (grid, amountBombs) => {
 }
 
 const numberGrid = (grid) => {
-    //HERE
+    const rows = grid.length
+    const columns = grid[0].length
+
+    const isBomb = (x, y) => {
+        let count = 0
+        for (let i = -1 ; i<=1 ; i++){
+            for (let j = -1; j<=1; j++){
+                let posX= x+i
+                let posY= y+j
+                if(posX>=0 && posY>=0 &&posX<rows && posY<columns && !(posX==posY && posX==0) && grid[posX][posY].type==="bomb"){
+                    count++
+                }
+            }
+        }
+        return count
+    }
+
+    for(let i=0; i<rows; i++){
+        for(let j=0; j<columns; j++){
+            grid[i][j]= {...grid[i][j], number: isBomb(i,j)}
+        }
+    }
     return grid
 }
 
