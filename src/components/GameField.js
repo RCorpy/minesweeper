@@ -5,23 +5,32 @@ import {connect} from 'react-redux'
 
 function GameField(props) {
 
-    useEffect(()=>{
+    /* eslint-disable */
+    useEffect(()=>{ 
+        props.createBoard(props.state.rows, props.state.columns, props.state.bombs)
+    }, [])
+    /* eslint-enable */
 
-        props.createBoard(props.state.rows, props.state.columns)
-    },[])
+    if(props.state.victory || props.state.defeat){
+        return(
+            <div>
+                {props.state.grid.map((row, rowIndex)=>row.map((cell, cellIndex) => {return (<Cell key={`${rowIndex}${cellIndex}`} type={cell.type} number={cell.number} row={rowIndex} column={cellIndex} status={"clicked"}/>)}))} 
+            </div>
+        )
+    }
 
     return (
         <div>
-            {props.state.grid.map((row, rowIndex)=>row.map((cell, cellIndex) => {return (<Cell type={cell.type} number={cell.number} row={rowIndex} column={cellIndex} status={cell.status}/>)}))} 
-            {JSON.stringify(props.state.grid)}
+            {props.state.grid.map((row, rowIndex)=>row.map((cell, cellIndex) => {return (<Cell key={`${rowIndex}${cellIndex}`} type={cell.type} number={cell.number} row={rowIndex} column={cellIndex} status={cell.status}/>)}))} 
         </div>
     )
 }
 
 const connectedGameField = connect(state => ({state:state}), (dispatch)=>({
-    createBoard: (rows, columns) => dispatch({
+    createBoard: (rows, columns, bombs) => dispatch({
         type: 'CREATE_BOARD',
-        size: [rows, columns]
+        size: [rows, columns],
+        bombs: bombs
     })
   }))(GameField)
 

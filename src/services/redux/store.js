@@ -1,13 +1,16 @@
 import {createStore} from 'redux'
 
 const initialState = {
+    bombs: 10,
+    victory: false,
+    defeat: false,
     rows: 5,
     columns: 10,
     grid: [[1]],
 
 }
 
-const createGrid = (rows, columns) => {
+const createGrid = (rows, columns, bombs) => {
     let grid = []
     for(let j=0; j<rows; j++){
         let rowArray = []
@@ -17,7 +20,8 @@ const createGrid = (rows, columns) => {
         grid.push(rowArray)
         
     }
-    const bombedGrid = placeBombs(grid, 10)
+    console.log(bombs)
+    const bombedGrid = placeBombs(grid, bombs)
     const bombedAndNumeredGrid = numberGrid(bombedGrid)
     return bombedAndNumeredGrid
 }
@@ -82,23 +86,30 @@ function reducer(state = initialState, action){
             return (
                 {
                     ...state,
-                    grid: createGrid(action.size[0], action.size[1])
+                    victory: false,
+                    defeat: false,
+                    grid: createGrid(action.size[0], action.size[1], action.bombs)
                 }
             )
         case 'CHANGE_BOARD_SIZE':
             return {
                 ...state,
+                victory: false,
+                defeat: false,
                 rows: action.rows,
                 columns: action.columns,
-                grid: createGrid(action.rows, action.columns)
+                grid: createGrid(action.rows, action.columns, action.bombs)
             }
         case 'RESET_BOARD':
             return {
                 ...state,
-                grid: createGrid(action.size[0], action.size[1])
+                victory: false,
+                defeat: false,
+                grid: createGrid(action.size[0], action.size[1], action.bombs)
             }
         case 'SET_CELL':
             let prevGrid = state.grid
+            if(action.newStatus==="bomb"){return {...state, defeat: true}}
             prevGrid[action.position[0]][action.position[1]] = { ...prevGrid[action.position[0]][action.position[1]] , status: action.newStatus}
             if(prevGrid[action.position[0]][action.position[1]].number===0 && action.newStatus==="clicked"){manageZero(prevGrid,action.position[0],action.position[1])}
             return {

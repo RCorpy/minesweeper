@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 
 function Cell(props) {
@@ -7,7 +7,7 @@ function Cell(props) {
         if (e.type === 'click') {
             if(props.type==="bomb"){
                 console.log("BOOOOOM")
-                props.setCell("clicked", [props.row, props.column])
+                props.setCell("bomb", [props.row, props.column])
             }
             else{
                 props.setCell("clicked", [props.row, props.column])}
@@ -28,7 +28,7 @@ function Cell(props) {
     if(props.status ==="clicked"){
         return (
         <>
-            {props.type==="bomb" ? <button> 💣</button>: <button>{props.number}</button>}
+            {props.type==="bomb" ? <button> <span role="img" aria-label="Bomb">💣</span></button>: <button>{props.number}</button>}
         </>)
     }
     else if(props.status ==="marked"){

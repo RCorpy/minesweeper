@@ -1,29 +1,28 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import './NavBar.css'
 
 function NavBar(props) {
 
-    const [columns, setColumns] = useState(10)
-    const [rows, setRows] = useState(6)
-  
     return (
         <div className="navbar">
-            <button className="menubutton" onClick={()=>{props.changeRowsColumns(rows, columns)}}>Menu</button>
-            <button className="resetbutton" onClick={()=>{props.resetBoard([props.state.rows, props.state.columns])}}>Reset</button>
+            <button className="menubutton" onClick={()=>{props.changeRowsColumns(6, 15, props.state.bombs)}}>Menu</button>
+            <button className="resetbutton" onClick={()=>{props.resetBoard([props.state.rows, props.state.columns], props.state.bombs)}}>Reset</button>
         </div>
     )
 }
 
 const connectedNavBar = connect(state => ({state:state}), (dispatch)=>({
-    changeRowsColumns: (rows, columns) => dispatch({
+    changeRowsColumns: (rows, columns, bombs) => dispatch({
         type: 'CHANGE_BOARD_SIZE',
         rows: rows,
-        columns: columns
+        columns: columns,
+        bombs: bombs
     }),
-    resetBoard: (size) => dispatch({
+    resetBoard: (size, bombs) => dispatch({
         type: 'RESET_BOARD',
-        size: size
+        size: size,
+        bombs: bombs
     })
   }))(NavBar)
   export default connectedNavBar;
