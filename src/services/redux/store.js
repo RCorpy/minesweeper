@@ -15,6 +15,7 @@ const createGrid = (rows, columns) => {
             rowArray.push({type: "", number: 9, status: "unclicked"})
         }
         grid.push(rowArray)
+        
     }
     const bombedGrid = placeBombs(grid, 10)
     const bombedAndNumeredGrid = numberGrid(grid)
@@ -39,11 +40,12 @@ const placeBombs = (grid, amountBombs) => {
             let c = randomColumn()
             if (bombGrid[r][c].type === "bomb") { return bombLoop(bombGrid, bombsRemaining)}
             else {
-            bombGrid[r][c] = {...bombGrid[r,c], type: "bomb"}
+            bombGrid[r][c] = {...bombGrid[r][c], type: "bomb"}
             return bombLoop(bombGrid, bombsRemaining-1)
         }
         }
     }
+    
     return bombLoop(grid, amountBombs)
 }
 
@@ -64,12 +66,13 @@ const numberGrid = (grid) => {
         }
         return count
     }
-
+    console.log(grid)
     for(let i=0; i<rows; i++){
         for(let j=0; j<columns; j++){
             grid[i][j]= {...grid[i][j], number: isBomb(i,j)}
         }
     }
+    console.log(grid)
     return grid
 }
 
