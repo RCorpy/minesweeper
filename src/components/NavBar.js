@@ -6,7 +6,7 @@ function NavBar(props) {
 
     return (
         <div className="navbar">
-            <button className="menubutton" onClick={()=>{props.changeRowsColumns(6, 15, props.state.bombs)}}>Menu</button>
+            <button className="menubutton" onClick={()=>{props.changeRowsColumns(8, 10, props.state.bombs)}}>Menu</button>
             <button className="resetbutton" onClick={()=>{props.resetBoard([props.state.rows, props.state.columns], props.state.bombs)}}>Reset</button>
         </div>
     )
