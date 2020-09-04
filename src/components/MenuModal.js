@@ -8,8 +8,23 @@ function MenuModal(props) {
     const [columns, setColumns] = useState(props.state.columns)
     const [bombs, setBombs] = useState(props.state.bombs)
 
+    const MAX_SIZE = 50;
+    const MIN_SIZE = 1
+
+    const normalize = (number) => {
+        if (number<=MAX_SIZE && number >= MIN_SIZE){
+            return number
+        }
+        if(number < MIN_SIZE){
+            return MIN_SIZE
+        }
+        else{
+            return MAX_SIZE
+        }
+    }
+
     const handleSet = () => {
-        props.setNewSizes(rows, columns, bombs)
+        props.setNewSizes(normalize(rows), normalize(columns), bombs)
         props.close()
     }
 
@@ -21,7 +36,7 @@ function MenuModal(props) {
                     <InputSelector value={rows} setter={setRows} name="rows" />
                     <InputSelector value={columns} setter={setColumns} name="columns"/>
                     <InputSelector value={bombs} setter={setBombs} name="bombs"/>
-                    <button onClick={handleSet}>Set</button>
+                    <button className="setButton"onClick={handleSet}>Set</button>
                 </div>
             </div>
         </div>

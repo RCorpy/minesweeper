@@ -3,7 +3,12 @@ import React from 'react'
 export default function InputSelector({value, setter, name}) {
 
     const modifyValue = (amount) => {
-        setter(prevState => prevState +amount)
+        setter(prevState => {
+            if(prevState>0){
+                return prevState +amount
+            }
+            else { return 1}
+        })
     }
 
     return (
