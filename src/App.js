@@ -10,14 +10,14 @@ function App() {
 
 
   return (
-    <div style={{display:"flex", justifyContent:"center"}}>
+    <>
       <Provider store={store}>
         <Container>
           <NavBar />
           <GameField />
         </Container>
       </Provider>
-    </div>
+    </>
   );
 }
 

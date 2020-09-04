@@ -1,11 +1,11 @@
 import {createStore} from 'redux'
 
 const initialState = {
-    bombs: 10,
+    bombs: 50,
     victory: false,
     defeat: false,
-    rows: 5,
-    columns: 10,
+    rows: 40,
+    columns: 40,
     grid: [[1]],
 
 }

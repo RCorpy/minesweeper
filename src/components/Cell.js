@@ -37,7 +37,7 @@ function Cell(props) {
             >
                 {props.status==="clicked" && (props.type==="bomb" ? <button> <span role="img" aria-label="Bomb">💣</span></button>: <button>{props.number}</button>)}
                 {props.status==="marked" && <button onContextMenu={(e)=>{handleClick(e)}}>x</button>}
-                {props.status==="unclicked" && <button ref={ref=> buttonRef=ref} onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}>_</button>}
+                {props.status==="unclicked" && <button ref={ref=> buttonRef=ref} onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}></button>}
             </Reward>
         </div>
     )

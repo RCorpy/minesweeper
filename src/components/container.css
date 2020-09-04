@@ -1,7 +1,18 @@
 .mainContainer {
-    
-   
-    max-width: 255px;
-    min-width: 20px;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
     border: 1px solid black;
+}
+
+.cellContainer {
+    margin-top: 1px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+body{
+    display:flex;
+    justify-content: center;
 }

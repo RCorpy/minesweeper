@@ -13,14 +13,14 @@ function GameField(props) {
 
     if(props.state.victory || props.state.defeat){
         return(
-            <div>
+            <div className="cellContainer">
                 {props.state.grid.map((row, rowIndex)=>row.map((cell, cellIndex) => {return (<Cell key={`${rowIndex}${cellIndex}`} type={cell.type} number={cell.number} row={rowIndex} column={cellIndex} status={"clicked"}/>)}))} 
             </div>
         )
     }
 
     return (
-        <div>
+        <div className="cellContainer">
             {props.state.grid.map((row, rowIndex)=>row.map((cell, cellIndex) => {return (<Cell key={`${rowIndex}${cellIndex}`} type={cell.type} number={cell.number} row={rowIndex} column={cellIndex} status={cell.status}/>)}))} 
         </div>
     )
