@@ -3,6 +3,9 @@
     justify-content: center;
     flex-direction: column;
     border: 1px solid black;
+    width: 100%;
+    margin: 0 auto;
+    
 }
 
 .cellContainer {
@@ -12,7 +15,4 @@
     justify-content: space-evenly;
 }
 
-body{
-    display:flex;
-    justify-content: center;
-}
+

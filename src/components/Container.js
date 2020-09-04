@@ -1,29 +1,38 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import './container.css'
+import Reward from 'react-rewards'
 
-const cellWidth= 27
-const cellHeight= 27
+const cellWidth= 30
+const cellHeight= 30
 const navBarHeight = 24
 
 function Container({children, ...props}) {
 
-    const [styles, setStyles] = useState({width: "255px"})
+    const [styles, setStyles] = useState({width: "0px"})
+    let containerRef = 0
 
     useEffect(()=>{
         const width = props.state.columns * cellWidth
         const height = props.state.rows * cellHeight + navBarHeight
         setStyles(prev => {
-            return {...prev, width: `${width}px`, height: `${height}px`}
+            return {width: `${width}px`, height: `${height}px`}
         })
-    }, [props.state.rows, props.state.columns])
+        if(props.state.victory) containerRef.rewardMe()
+    }, [props.state.rows, props.state.columns, props.state.victory, containerRef])
     return (
-        <div 
-            className="mainContainer"
-            style={styles}
-            >
-            {children}
-        </div>
+        <Reward
+            ref={ref=> containerRef=ref}
+            type={"confetti"}
+            config={{lifetime:1000, angle:40, spread: 250, elementSize: 13, elementCount: 70}}
+        >
+            <div 
+                className="mainContainer"
+                style={styles}
+                >
+                {children}
+            </div>
+        </Reward>
     )
 }
 

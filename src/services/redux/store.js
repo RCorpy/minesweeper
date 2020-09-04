@@ -1,11 +1,11 @@
 import {createStore} from 'redux'
 
 const initialState = {
-    bombs: 50,
+    bombs: 30,
     victory: false,
     defeat: false,
-    rows: 40,
-    columns: 40,
+    rows: 20,
+    columns: 60,
     grid: [[1]],
 
 }
@@ -116,6 +116,11 @@ function reducer(state = initialState, action){
                 ...state,
                 grid: prevGrid
             }
+            case 'WIN':
+                return {
+                    ...state,
+                    victory: true
+                }
         default:
             return state
     }

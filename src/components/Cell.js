@@ -4,6 +4,12 @@ import Reward from 'react-rewards'
 
 function Cell(props) {
 
+    const hasWon = () => {
+        if(props.state.grid.filter(row=> (row.filter(cell=>(cell.status==="unclicked" && cell.type!=="bomb"))).length>0).length===0){
+            props.dispatchWin()
+        }
+    }
+
     const handleClick = (e) => {
         if (e.type === 'click') {
             if(props.type==="bomb"){
@@ -12,7 +18,9 @@ function Cell(props) {
                 buttonRef.rewardMe()
             }
             else{
-                props.setCell("clicked", [props.row, props.column])}
+                props.setCell("clicked", [props.row, props.column])
+                hasWon()
+            }
             
 
         }
@@ -32,8 +40,8 @@ function Cell(props) {
         <div className="cell">
             <Reward
                 ref={ref=> buttonRef=ref}
-                type='emoji'
-                config={{springAnimation:false,emoji:['💣','💀'], spread: 160, colors:['red',"black"]}}
+                type={"emoji"}
+                config={{springAnimation:false, emoji:['💣','💀'], spread: 160}}
             >
                 {props.status==="clicked" && (props.type==="bomb" ? <button> <span role="img" aria-label="Bomb">💣</span></button>: <button>{props.number}</button>)}
                 {props.status==="marked" && <button onContextMenu={(e)=>{handleClick(e)}}>x</button>}
@@ -48,6 +56,9 @@ const connectedCell = connect(state => ({state:state}), (dispatch)=>({
         type: 'SET_CELL',
         newStatus: newStatus,
         position: position
+    }),
+    dispatchWin: () => dispatch({
+        type: 'WIN'
     })
   }))(Cell)
   export default connectedCell;
