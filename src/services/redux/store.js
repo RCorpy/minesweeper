@@ -5,7 +5,7 @@ const initialState = {
     victory: false,
     defeat: false,
     rows: 20,
-    columns: 60,
+    columns: 20,
     grid: [[1]],
 
 }
