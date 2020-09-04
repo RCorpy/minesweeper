@@ -88,7 +88,8 @@ function reducer(state = initialState, action){
                     ...state,
                     victory: false,
                     defeat: false,
-                    grid: createGrid(action.size[0], action.size[1], action.bombs)
+                    grid: createGrid(action.size[0], action.size[1], action.bombs),
+                    
                 }
             )
         case 'CHANGE_BOARD_SIZE':
@@ -98,6 +99,7 @@ function reducer(state = initialState, action){
                 defeat: false,
                 rows: action.rows,
                 columns: action.columns,
+                bombs: action.bombs,
                 grid: createGrid(action.rows, action.columns, action.bombs)
             }
         case 'RESET_BOARD':
