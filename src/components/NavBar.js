@@ -1,24 +1,29 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import './NavBar.css'
+import MenuModal from './MenuModal'
+
+
 
 function NavBar(props) {
 
+    const [showModal, setShowModal] = useState(false)
+
+    const handleMenuButton = () => {
+        setShowModal(true)
+    }
+
     return (
         <div className="navbar">
-            <button className="menubutton" onClick={()=>{props.changeRowsColumns(8, 10, props.state.bombs)}}>Menu</button>
+            <button className="menubutton" onClick={()=>{handleMenuButton()}}>Menu</button>
             <button className="resetbutton" onClick={()=>{props.resetBoard([props.state.rows, props.state.columns], props.state.bombs)}}>Reset</button>
+            {showModal && <MenuModal close={()=>setShowModal(false)}/>}
         </div>
     )
 }
 
 const connectedNavBar = connect(state => ({state:state}), (dispatch)=>({
-    changeRowsColumns: (rows, columns, bombs) => dispatch({
-        type: 'CHANGE_BOARD_SIZE',
-        rows: rows,
-        columns: columns,
-        bombs: bombs
-    }),
+
     resetBoard: (size, bombs) => dispatch({
         type: 'RESET_BOARD',
         size: size,

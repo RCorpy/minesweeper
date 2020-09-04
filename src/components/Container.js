@@ -5,7 +5,7 @@ import Reward from 'react-rewards'
 
 const cellWidth= 30
 const cellHeight= 30
-const navBarHeight = 24
+const navBarHeight = 62
 
 function Container({children, ...props}) {
 

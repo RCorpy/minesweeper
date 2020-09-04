@@ -4,6 +4,29 @@ import Reward from 'react-rewards'
 
 function Cell(props) {
 
+    const cellColor = (number) => {
+        switch(number){
+            case 1:
+                return {color: "green"}
+            case 2:
+                return {color: "#1EB26B"}
+            case 3:
+                return {color: "blue"}
+            case 4:
+                return {color: "#B0B21E"}
+            case 5:
+                return {color: "orange"}
+            case 6:
+                return {color: "red"}
+            case 7:
+                return {color: "darkred"}
+            case 8:
+                return {color: "pink"}
+            default:
+                return {}
+        }
+    } 
+
     const hasWon = () => {
         if(props.state.grid.filter(row=> (row.filter(cell=>(cell.status==="unclicked" && cell.type!=="bomb"))).length>0).length===0){
             props.dispatchWin()
@@ -43,9 +66,9 @@ function Cell(props) {
                 type={"emoji"}
                 config={{springAnimation:false, emoji:['💣','💀'], spread: 160}}
             >
-                {props.status==="clicked" && (props.type==="bomb" ? <button> <span role="img" aria-label="Bomb">💣</span></button>: <button>{props.number}</button>)}
-                {props.status==="marked" && <button onContextMenu={(e)=>{handleClick(e)}}>x</button>}
-                {props.status==="unclicked" && <button ref={ref=> buttonRef=ref} onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}></button>}
+                {props.status==="clicked" && (props.type==="bomb" ? <button> <span role="img" aria-label="Bomb">💣</span></button>: <button style={cellColor(props.number)}>{props.number}</button>)}
+                {props.status==="marked" && <button className="unclickedCell" onContextMenu={(e)=>{handleClick(e)}}>x</button>}
+                {props.status==="unclicked" && <button className="unclickedCell" ref={ref=> buttonRef=ref} onClick={(e)=>handleClick(e)} onContextMenu={(e)=>{handleClick(e)}}></button>}
             </Reward>
         </div>
     )
