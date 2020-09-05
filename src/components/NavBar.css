@@ -43,6 +43,12 @@
     justify-content: center;
   }
 
+  @media screen and (max-device-width:640px){
+    .modalContent{
+      height: 80vh;
+    }
+    
+  }
   .close {
     color: #aaa;
     float: right;
